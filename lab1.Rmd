@@ -15,3 +15,25 @@ library(tmap)
 
 ```
 
+### Read in data
+
+```{r}
+sf_trees <- read_csv(here('data', 'sf_trees', "sf_trees.csv"))
+
+top_5_status <- sf_trees %>% 
+  group_by(legal_status) %>% 
+  summarize(tree_count = n()) %>% 
+  slice_max(tree_count, n = 5) %>% #find values of this variable that are maximum
+  arrange(-tree_count)
+
+```
+
+```{r}
+ggplot(data = top_5_status, aes(x = fct_reorder(legal_status, tree_count), #reorders legal status by tree counts
+                                y = true_count)) +
+  geom_col() +
+  labs(y = 'Tree count', x = 'Legal Status') +
+  coord_flip() +
+    theme_minimal()
+```
+
