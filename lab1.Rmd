@@ -1,0 +1,17 @@
+---
+title: "ESM 244 Lab 1"
+author: "Max Settineri"
+date: "2023-01-13"
+output: html_document
+---
+
+```{r setup, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, echo = TRUE, warning = FALSE, message = FALSE)
+
+library(here)
+library(tidyverse)
+library(sf)
+library(tmap)
+
+```
+
