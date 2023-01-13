@@ -30,7 +30,7 @@ top_5_status <- sf_trees %>%
 
 ```{r}
 ggplot(data = top_5_status, aes(x = fct_reorder(legal_status, tree_count), #reorders legal status by tree counts
-                                y = true_count)) +
+                                y = tree_count)) +
   geom_col() +
   labs(y = 'Tree count', x = 'Legal Status') +
   coord_flip() +
