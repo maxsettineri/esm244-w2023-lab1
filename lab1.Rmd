@@ -28,12 +28,44 @@ top_5_status <- sf_trees %>%
 
 ```
 
+### Plot top 5 legal status
+
 ```{r}
 ggplot(data = top_5_status, aes(x = fct_reorder(legal_status, tree_count), #reorders legal status by tree counts
                                 y = tree_count)) +
   geom_col() +
   labs(y = 'Tree count', x = 'Legal Status') +
-  coord_flip() +
+  coord_flip() + # flips x and y axis
     theme_minimal()
+```
+
+### Keep observations where legal status is "Premitted Site" and caretaker is "MTA"
+
+```{r}
+# sf_trees$legal_status %>%  unique()
+permitted_mta <- sf_trees %>% 
+  filter(legal_status == "Permitted Site" & caretaker == "MTA")
+```
+
+### Keep Blackwood acacia trees, keep only legal_status, date, lat, long columns
+
+```{r}
+blackwood_acacia <- sf_trees %>% 
+  filter(str_detect(species, "Blackwood Acacia")) %>% # shortcut to pull pattern in column data so dont have to type whole tree name
+  select(legal_status, date, latitude, longitude)
+
+###. make plot of SF acacia
+ggplot(data = blackwood_acacia, aes(x = longitude, y = latitude)) +
+  geom_point()
+```
+
+### Use tidyr::separate() to separate one column into multiple, and tidyr::unite() to rejoin
+
+```{r}
+sf_trees_sep <- sf_trees %>% 
+  separate(species, into = c('spp_scientific', 'spp_common'), sep = ' :: ')
+
+sf_trees_unite <- sf_trees %>% 
+  unite("id_status", tree_id:species, sep = '_NEW_')
 ```
 
